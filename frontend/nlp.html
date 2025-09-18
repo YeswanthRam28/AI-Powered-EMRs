@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AI EMR NLP</title>
+<style>
+body { font-family: Arial; margin: 20px; }
+textarea { width: 100%; height: 100px; margin-bottom: 10px; }
+select, button { margin: 5px 0; padding: 5px; }
+.card { border: 1px solid #ccc; padding: 10px; margin-top: 10px; }
+</style>
+</head>
+<body>
+
+<h2>NLP Tasks</h2>
+<textarea id="medicalText" placeholder="Paste patient note here..."></textarea><br>
+
+<select id="taskSelect">
+  <option value="summarize">Summarize</option>
+  <option value="keywords">Extract Keywords</option>
+  <option value="insights">Insights</option>
+  <option value="diagnosis">Diagnosis</option>
+  <option value="treatment_plan">Treatment Plan</option>
+  <option value="risk_factors">Risk Factors</option>
+  <option value="red_flags">Red Flags</option>
+  <option value="translate">Translate (Tamil)</option>
+  <option value="sentiment">Sentiment</option>
+  <option value="ner">NER</option>
+</select><br>
+
+<button onclick="submitNLP()">Submit</button>
+
+<div id="nlpResult"></div>
+<hr>
+<h3>Saved Results</h3>
+<button onclick="fetchAllResults()">Fetch All</button>
+<div id="allResults"></div>
+
+<script>
+async function submitNLP() {
+  const text = document.getElementById('medicalText').value;
+  const task = document.getElementById('taskSelect').value;
+
+  const response = await fetch('http://127.0.0.1:8000/nlp/', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({text, task})
+  });
+
+  const data = await response.json();
+  document.getElementById('nlpResult').innerHTML = `
+    <div class="card">
+      <strong>Task:</strong> ${data.task}<br>
+      <strong>Input:</strong> ${data.input_text}<br>
+      <strong>Result:</strong> ${data.result}
+    </div>
+  `;
+}
+
+async function fetchAllResults() {
+  const response = await fetch('http://127.0.0.1:8000/nlp/');
+  const results = await response.json();
+
+  let html = '';
+  results.forEach((item, idx) => {
+    html += `<div class="card"><strong>${idx+1}.</strong> [${item.task}] ${item.result}</div>`;
+  });
+
+  document.getElementById('allResults').innerHTML = html;
+}
+</script>
+</body>
+</html>
