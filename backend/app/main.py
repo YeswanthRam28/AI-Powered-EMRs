@@ -3,9 +3,10 @@ from app.routers import patients
 
 app = FastAPI(title="Smart EMR API")
 
-@app.get("/")  # 👈 root endpoint
-def root():
-    return {"message": "Hello, EMR Backend is running!"}
-
-# include patients router
+# Include patients router
 app.include_router(patients.router)
+
+# Optional: health endpoint to check backend separately
+@app.get("/api/health")
+def health():
+    return {"message": "EMR Backend is running!"}
