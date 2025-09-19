@@ -1,92 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI-Powered EMR Dashboard</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI-Powered EMR Dashboard</title>
+<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <aside class="sidebar">
-        <h2>EMR Dashboard</h2>
-        <ul>
-            <li class="active"><a href="#" data-tab="dashboard">Home</a></li>
-            <li><a href="#" data-tab="nlp-form">NLP Tool</a></li>
-            <li><a href="#" data-tab="patients">Patients</a></li>
-            <li><a href="#" data-tab="doctors">Doctors</a></li>
-            <li><a href="#" data-tab="appointments">Appointments</a></li>
-            <li><a href="#" data-tab="nlp-results">NLP Results</a></li>
-        </ul>
-    </aside>
 
-    <main class="main-content">
-        <!-- Dashboard Tab -->
-        <section class="tab-content" id="dashboard">
-            <header>
-                <h1>Welcome, Doctor</h1>
-            </header>
-            <p>Select a module to manage patients, doctors, appointments or NLP.</p>
-        </section>
+<aside class="sidebar">
+    <h2>EMR Dashboard</h2>
+    <ul>
+        <li class="active"><a href="index.html">Home</a></li>
+        <li><a href="nlp.html">NLP Tool</a></li>
+        <li><a href="patients.html">Patients</a></li>
+        <li><a href="doctors.html">Doctors</a></li>
+        <li><a href="appointments.html">Appointments</a></li>
+        <li><a href="nlp_results.html">NLP Results</a></li>
+    </ul>
+</aside>
 
-        <!-- NLP Form Tab -->
-        <section class="tab-content" id="nlp-form" style="display:none;">
-            <h2>NLP Medical Note Processor</h2>
-            <form id="nlpForm">
-                <label for="medicalNote">Medical Note:</label>
-                <textarea id="medicalNote" rows="5" placeholder="Enter patient note here..." required></textarea>
+<main class="main-content">
+    <header><h1>Welcome, Doctor</h1></header>
+    <p>Select a module from the sidebar to manage patients, doctors, appointments, or NLP tasks.</p>
+</main>
 
-                <label for="task">Task:</label>
-                <select id="task" required>
-                    <option value="summarize">Summarize</option>
-                    <option value="keywords">Keywords</option>
-                    <option value="insights">Insights</option>
-                    <option value="diagnosis">Diagnosis</option>
-                    <option value="treatment_plan">Treatment Plan</option>
-                    <option value="risk_factors">Risk Factors</option>
-                    <option value="red_flags">Red Flags</option>
-                    <option value="translate">Translate (Tamil)</option>
-                    <option value="sentiment">Sentiment</option>
-                    <option value="ner">NER</option>
-                </select>
-
-                <button type="submit">Submit</button>
-            </form>
-            <div id="nlpResult" class="result-card"></div>
-        </section>
-
-        <!-- Patients Tab -->
-        <section class="tab-content" id="patients" style="display:none;">
-            <h2>Patients Management</h2>
-            <button id="fetchPatientsBtn">Fetch All Patients</button>
-            <ul id="patientsList"></ul>
-        </section>
-
-        <!-- Doctors Tab -->
-        <section class="tab-content" id="doctors" style="display:none;">
-            <h2>Doctors Management</h2>
-            <button id="fetchDoctorsBtn">Fetch All Doctors</button>
-            <ul id="doctorsList"></ul>
-        </section>
-
-        <!-- Appointments Tab -->
-        <section class="tab-content" id="appointments" style="display:none;">
-            <h2>Appointments Management</h2>
-            <button id="fetchAppointmentsBtn">Fetch All Appointments</button>
-            <ul id="appointmentsList"></ul>
-        </section>
-
-        <!-- NLP Results Tab -->
-        <section class="tab-content" id="nlp-results" style="display:none;">
-            <h2>Saved NLP Results</h2>
-            <button id="fetchResultsBtn">Fetch All Results</button>
-            <ul id="resultsList"></ul>
-        </section>
-    </main>
-
-    <footer>
-        <p>&copy; 2025 AI-Powered EMR</p>
-    </footer>
-
-    <script src="script.js"></script>
+<footer>&copy; 2025 AI-Powered EMR</footer>
 </body>
 </html>

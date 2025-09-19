@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Doctors Management</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Doctors Management</h1>
+
+    <!-- Form to create doctor -->
+    <form id="doctorForm">
+        <input type="text" id="doctorName" placeholder="Name" required>
+        <input type="text" id="doctorSpecialty" placeholder="Specialty" required>
+        <input type="text" id="doctorContact" placeholder="Contact" required>
+        <button type="submit">Add Doctor</button>
+    </form>
+
+    <!-- List doctors -->
+    <button id="fetchDoctorsBtn">Refresh List</button>
+    <ul id="doctorsList"></ul>
+
+    <script src="doctors.js"></script>
+</body>
+</html>

@@ -1,75 +1,31 @@
-const BASE_URL = 'http://127.0.0.1:8000/patients/';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Patients Management</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Patients Management</h1>
 
-// ----------- CREATE Patient -----------
-async function createPatient(name, age, gender) {
-    try {
-        const res = await fetch(BASE_URL, {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({name, age, gender})
-        });
-        const data = await res.json();
-        console.log('Created:', data);
-        return data;
-    } catch (err) {
-        console.error('Error creating patient:', err);
-    }
-}
+    <!-- Form to create patient -->
+    <form id="patientForm">
+        <input type="text" id="patientName" placeholder="Name" required>
+        <input type="number" id="patientAge" placeholder="Age" required>
+        <select id="patientGender" required>
+            <option value="">Select Gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+        </select>
+        <input type="text" id="patientAllergies" placeholder="Allergies (optional)">
+        <button type="submit">Add Patient</button>
+    </form>
 
-// ----------- LIST All Patients -----------
-async function listPatients() {
-    try {
-        const res = await fetch(BASE_URL);
-        const data = await res.json();
-        console.log('All Patients:', data);
-        return data;
-    } catch (err) {
-        console.error('Error listing patients:', err);
-    }
-}
+    <!-- List patients -->
+    <button id="fetchPatientsBtn">Refresh List</button>
+    <ul id="patientsList"></ul>
 
-// ----------- GET Patient by ID -----------
-async function getPatientById(id) {
-    try {
-        const res = await fetch(`${BASE_URL}${id}/`);
-        const data = await res.json();
-        console.log(`Patient ${id}:`, data);
-        return data;
-    } catch (err) {
-        console.error(`Error fetching patient ${id}:`, err);
-    }
-}
-
-// ----------- UPDATE Patient -----------
-async function updatePatient(id, updates) {
-    try {
-        const res = await fetch(`${BASE_URL}${id}/`, {
-            method: 'PUT',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(updates)
-        });
-        const data = await res.json();
-        console.log(`Updated Patient ${id}:`, data);
-        return data;
-    } catch (err) {
-        console.error(`Error updating patient ${id}:`, err);
-    }
-}
-
-// ----------- DELETE Patient -----------
-async function deletePatient(id) {
-    try {
-        const res = await fetch(`${BASE_URL}${id}/`, { method: 'DELETE' });
-        if (res.ok) console.log(`Deleted Patient ${id}`);
-        else console.error('Failed to delete patient');
-    } catch (err) {
-        console.error(`Error deleting patient ${id}:`, err);
-    }
-}
-
-// ----------- USAGE EXAMPLES -----------
-// createPatient('John Doe', 45, 'Male');
-// listPatients();
-// getPatientById(1);
-// updatePatient(1, {name: 'Jane Doe', age: 50});
-// deletePatient(1);
+    <script src="patients.js"></script>
+</body>
+</html>

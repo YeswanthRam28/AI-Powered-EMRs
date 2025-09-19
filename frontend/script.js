@@ -1,3 +1,6 @@
+// Base URL (assumes backend and frontend served from same domain)
+const BASE_URL = "";
+
 // ----------------- Tab Navigation -----------------
 const tabs = document.querySelectorAll('.sidebar a[data-tab]');
 const tabContents = document.querySelectorAll('.tab-content');
@@ -15,7 +18,7 @@ tabs.forEach(tab => {
     });
 });
 
-// ----------------- NLP Form -----------------
+// ----------------- NLP Form Submission -----------------
 const nlpForm = document.getElementById('nlpForm');
 const nlpResult = document.getElementById('nlpResult');
 
@@ -27,18 +30,20 @@ nlpForm.addEventListener('submit', async e => {
     nlpResult.textContent = "Processing...";
 
     try {
-        const res = await fetch('http://127.0.0.1:8000/nlp/', {
+        const res = await fetch(`${BASE_URL}/nlp/`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ text, task })
         });
+
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
         const data = await res.json();
+
         nlpResult.innerHTML = `
             <div class="result-card">
-                <strong>Task:</strong> ${data.task}<br>
-                <strong>Input:</strong> ${data.input_text}<br>
-                <strong>Result:</strong> ${data.result}
+                <strong>Task:</strong> ${data.task || task}<br>
+                <strong>Input:</strong> ${data.input_text || text}<br>
+                <strong>Result:</strong> ${data.result || "No result available"}
             </div>
         `;
     } catch (err) {
@@ -47,20 +52,28 @@ nlpForm.addEventListener('submit', async e => {
     }
 });
 
-// ----------------- NLP Results -----------------
+// ----------------- Fetch Saved NLP Results -----------------
 const fetchResultsBtn = document.getElementById('fetchResultsBtn');
 const resultsList = document.getElementById('resultsList');
 
 fetchResultsBtn.addEventListener('click', async () => {
     resultsList.innerHTML = "Fetching...";
     try {
-        const res = await fetch('http://127.0.0.1:8000/nlp/');
+        const res = await fetch(`${BASE_URL}/nlp/`);
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
         const data = await res.json();
+
         resultsList.innerHTML = "";
-        data.forEach((item, index) => {
+        const results = data.results || data; // fallback if backend returns array directly
+
+        if (!results || results.length === 0) {
+            resultsList.textContent = "No NLP results found.";
+            return;
+        }
+
+        results.forEach((item, index) => {
             const li = document.createElement('li');
-            li.innerHTML = `<strong>${index + 1}. [${item.task}]</strong> ${item.input_text} → ${item.result}`;
+            li.innerHTML = `<strong>${index + 1}. [${item.task || "N/A"}]</strong> ${item.input_text || ""} → ${item.result || ""}`;
             resultsList.appendChild(li);
         });
     } catch (err) {
@@ -76,13 +89,19 @@ const patientsList = document.getElementById('patientsList');
 fetchPatientsBtn.addEventListener('click', async () => {
     patientsList.innerHTML = "Fetching...";
     try {
-        const res = await fetch('http://127.0.0.1:8000/patient/list/');
+        const res = await fetch(`${BASE_URL}/patient/list/`);
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
         const data = await res.json();
+
         patientsList.innerHTML = "";
+        if (!data || data.length === 0) {
+            patientsList.textContent = "No patients found.";
+            return;
+        }
+
         data.forEach(p => {
             const li = document.createElement('li');
-            li.textContent = `[${p.id}] ${p.name} - ${p.age}y`;
+            li.textContent = `[${p.id || "N/A"}] ${p.name || "Unnamed"} - ${p.age || "N/A"}y`;
             patientsList.appendChild(li);
         });
     } catch (err) {
@@ -98,13 +117,19 @@ const doctorsList = document.getElementById('doctorsList');
 fetchDoctorsBtn.addEventListener('click', async () => {
     doctorsList.innerHTML = "Fetching...";
     try {
-        const res = await fetch('http://127.0.0.1:8000/doctor/list/');
+        const res = await fetch(`${BASE_URL}/doctor/list/`);
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
         const data = await res.json();
+
         doctorsList.innerHTML = "";
+        if (!data || data.length === 0) {
+            doctorsList.textContent = "No doctors found.";
+            return;
+        }
+
         data.forEach(d => {
             const li = document.createElement('li');
-            li.textContent = `[${d.id}] Dr. ${d.name} - ${d.specialty || d.specialization}`;
+            li.textContent = `[${d.id || "N/A"}] Dr. ${d.name || "Unnamed"} - ${d.specialty || d.specialization || "N/A"}`;
             doctorsList.appendChild(li);
         });
     } catch (err) {
@@ -120,13 +145,19 @@ const appointmentsList = document.getElementById('appointmentsList');
 fetchAppointmentsBtn.addEventListener('click', async () => {
     appointmentsList.innerHTML = "Fetching...";
     try {
-        const res = await fetch('http://127.0.0.1:8000/appointment/list/');
+        const res = await fetch(`${BASE_URL}/appointment/list/`);
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
         const data = await res.json();
+
         appointmentsList.innerHTML = "";
+        if (!data || data.length === 0) {
+            appointmentsList.textContent = "No appointments found.";
+            return;
+        }
+
         data.forEach(a => {
             const li = document.createElement('li');
-            li.textContent = `[${a.id}] Patient ${a.patient_id} with Dr. ${a.doctor_id} on ${a.date}`;
+            li.textContent = `[${a.id || "N/A"}] Patient ${a.patient_id || "N/A"} with Dr. ${a.doctor_id || "N/A"} on ${a.date || "N/A"}`;
             appointmentsList.appendChild(li);
         });
     } catch (err) {

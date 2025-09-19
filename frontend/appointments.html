@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Appointments Management</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Appointments Management</h1>
+
+    <!-- Form to create appointment -->
+    <form id="appointmentForm">
+        <select id="patient" required>
+            <option value="">Select Patient</option>
+        </select>
+        <select id="doctor" required>
+            <option value="">Select Doctor</option>
+        </select>
+        <input type="datetime-local" id="date" required>
+        <input type="text" id="notes" placeholder="Notes (optional)">
+        <button type="submit">Add Appointment</button>
+    </form>
+
+    <!-- List appointments -->
+    <button id="fetchAppointmentsBtn">Refresh List</button>
+    <ul id="appointmentsList"></ul>
+
+    <script src="appointments.js"></script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NLP Results</title>
+<link rel="stylesheet" href="css/style.css">
+<style>
+    main { padding:2rem; }
+    ul li { margin-bottom:0.5rem; background:#ecf0f1; padding:1rem; border-radius:8px; }
+</style>
+</head>
+<body>
+
+<aside class="sidebar">
+    <h2>EMR Dashboard</h2>
+    <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="nlp.html">NLP Tool</a></li>
+        <li><a href="patients.html">Patients</a></li>
+        <li><a href="doctors.html">Doctors</a></li>
+        <li><a href="appointments.html">Appointments</a></li>
+        <li class="active"><a href="nlp_results.html">NLP Results</a></li>
+    </ul>
+</aside>
+
+<main>
+    <h1>Saved NLP Results</h1>
+    <ul id="resultsList">
+        <li>Loading results...</li>
+    </ul>
+</main>
+
+<script>
+const resultsList = document.getElementById('resultsList');
+const BASE_URL = 'http://127.0.0.1:8000/nlp/';
+
+async function loadNLPResults() {
+    try {
+        const res = await fetch(BASE_URL);
+        if (!res.ok) throw new Error('Failed to fetch NLP results');
+        const data = await res.json();
+        resultsList.innerHTML = "";
+        const results = data.results || data;
+        if (!results.length) {
+            resultsList.innerHTML = "<li>No NLP results found.</li>";
+            return;
+        }
+        results.forEach((item, index) => {
+            const li = document.createElement('li');
+            li.innerHTML = `<strong>${index + 1}. [${item.task || "N/A"}]</strong><br>
+                            <strong>Input:</strong> ${item.input_text || ""}<br>
+                            <strong>Result:</strong> ${item.result || ""}`;
+            resultsList.appendChild(li);
+        });
+    } catch (err) {
+        resultsList.innerHTML = "<li>Error fetching NLP results.</li>";
+        console.error(err);
+    }
+}
+
+// Load results on page load
+window.addEventListener('DOMContentLoaded', loadNLPResults);
+</script>
+
+</body>
+</html>
