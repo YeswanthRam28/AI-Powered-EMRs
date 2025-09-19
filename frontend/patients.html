@@ -3,14 +3,119 @@
 <head>
     <meta charset="UTF-8">
     <title>Patients Management</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa, #e4ebf1);
+            margin: 0;
+            padding: 2rem;
+            color: #2c3e50;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 2rem;
+            color: #34495e;
+            animation: fadeInDown 0.8s ease-in-out;
+        }
+
+        form {
+            background: #ffffff;
+            padding: 2rem;
+            border-radius: 15px;
+            max-width: 500px;
+            margin: 0 auto 2rem auto;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            animation: fadeIn 0.9s ease-in-out;
+        }
+
+        input, select, button {
+            width: 100%;
+            padding: 0.9rem;
+            margin: 0.6rem 0;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, select:focus {
+            border-color: #3498db;
+            box-shadow: 0 0 8px rgba(52, 152, 219, 0.4);
+            outline: none;
+        }
+
+        button {
+            background: #3498db;
+            color: white;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        button:active {
+            transform: translateY(1px);
+        }
+
+        #fetchPatientsBtn {
+            display: block;
+            margin: 1rem auto;
+            max-width: 200px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        ul li {
+            background: #ffffff;
+            padding: 1rem 1.5rem;
+            margin-bottom: 1rem;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: fadeInUp 0.6s ease;
+        }
+
+        ul li:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
 </head>
 <body>
-    <h1>Patients Management</h1>
+    <h1>👩‍⚕️ Patients Management</h1>
 
     <!-- Form to create patient -->
     <form id="patientForm">
-        <input type="text" id="patientName" placeholder="Name" required>
+        <input type="text" id="patientName" placeholder="Patient Name" required>
         <input type="number" id="patientAge" placeholder="Age" required>
         <select id="patientGender" required>
             <option value="">Select Gender</option>
@@ -19,11 +124,11 @@
             <option value="Other">Other</option>
         </select>
         <input type="text" id="patientAllergies" placeholder="Allergies (optional)">
-        <button type="submit">Add Patient</button>
+        <button type="submit">➕ Add Patient</button>
     </form>
 
     <!-- List patients -->
-    <button id="fetchPatientsBtn">Refresh List</button>
+    <button id="fetchPatientsBtn">🔄 Refresh List</button>
     <ul id="patientsList"></ul>
 
     <script src="patients.js"></script>

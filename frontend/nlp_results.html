@@ -3,29 +3,114 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NLP Results</title>
-<link rel="stylesheet" href="css/style.css">
+<title>NLP Results | Clinical Intelligence Hub</title>
+<!-- Google Fonts & Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
 <style>
-    main { padding:2rem; }
-    ul li { margin-bottom:0.5rem; background:#ecf0f1; padding:1rem; border-radius:8px; }
+/* --- Reset & Base --- */
+* { margin:0; padding:0; box-sizing:border-box; font-family:'Roboto',sans-serif;}
+body {
+    display: flex;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #fef3c7 0%, #dbeafe 100%);
+    color: #111827;
+}
+
+/* --- Sidebar --- */
+.sidebar {
+    width: 230px;
+    background: #1e293b;
+    color: #fff;
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+}
+.sidebar h2 {
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+    text-align: center;
+}
+.sidebar ul { list-style: none; }
+.sidebar ul li { margin: 12px 0; }
+.sidebar ul li a {
+    text-decoration: none;
+    color: #cbd5e1;
+    padding: 10px 14px;
+    display: block;
+    border-radius: 8px;
+    transition: background 0.3s, color 0.3s;
+}
+.sidebar ul li.active a, .sidebar ul li a:hover {
+    background: #3b82f6;
+    color: #fff;
+}
+
+/* --- Main Content --- */
+main {
+    flex: 1;
+    padding: 40px;
+    animation: fadeSlide 0.8s ease forwards;
+}
+h1 {
+    font-size: 2rem;
+    margin-bottom: 25px;
+    color: #1e293b;
+}
+
+/* --- Results List --- */
+#resultsList {
+    list-style: none;
+    padding: 0;
+}
+#resultsList li {
+    background: rgba(255,255,255,0.95);
+    margin-bottom: 15px;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+#resultsList li:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+}
+#resultsList li strong {
+    color: #1e40af;
+}
+
+/* --- Animations --- */
+@keyframes fadeSlide {
+    0% {opacity:0; transform:translateY(20px);}
+    100% {opacity:1; transform:translateY(0);}
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+    body { flex-direction: column; }
+    .sidebar { width: 100%; flex-direction: row; overflow-x: auto; }
+    .sidebar ul { display: flex; }
+    .sidebar ul li { margin: 0 10px; }
+}
 </style>
 </head>
 <body>
 
 <aside class="sidebar">
-    <h2>EMR Dashboard</h2>
+    <h2>Clinical Hub</h2>
     <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="nlp.html">NLP Tool</a></li>
-        <li><a href="patients.html">Patients</a></li>
-        <li><a href="doctors.html">Doctors</a></li>
-        <li><a href="appointments.html">Appointments</a></li>
-        <li class="active"><a href="nlp_results.html">NLP Results</a></li>
+        <li><a href="index.html"><i class="fa-solid fa-house"></i> Home</a></li>
+        <li><a href="nlp.html"><i class="fa-solid fa-robot"></i> NLP Tool</a></li>
+        <li><a href="patients.html"><i class="fa-solid fa-user-injured"></i> Patients</a></li>
+        <li><a href="doctors.html"><i class="fa-solid fa-user-md"></i> Doctors</a></li>
+        <li><a href="appointments.html"><i class="fa-solid fa-calendar-check"></i> Appointments</a></li>
+        <li class="active"><a href="nlp_results.html"><i class="fa-solid fa-database"></i> NLP Results</a></li>
     </ul>
 </aside>
 
 <main>
-    <h1>Saved NLP Results</h1>
+    <h1><i class="fa-solid fa-database"></i> Saved NLP Results</h1>
     <ul id="resultsList">
         <li>Loading results...</li>
     </ul>
@@ -48,9 +133,11 @@ async function loadNLPResults() {
         }
         results.forEach((item, index) => {
             const li = document.createElement('li');
-            li.innerHTML = `<strong>${index + 1}. [${item.task || "N/A"}]</strong><br>
-                            <strong>Input:</strong> ${item.input_text || ""}<br>
-                            <strong>Result:</strong> ${item.result || ""}`;
+            li.innerHTML = `
+                <strong>${index + 1}. [${item.task || "N/A"}]</strong><br>
+                <strong>Input:</strong> ${item.input_text || ""}<br>
+                <strong>Result:</strong> ${item.result || ""}
+            `;
             resultsList.appendChild(li);
         });
     } catch (err) {
@@ -59,7 +146,6 @@ async function loadNLPResults() {
     }
 }
 
-// Load results on page load
 window.addEventListener('DOMContentLoaded', loadNLPResults);
 </script>
 

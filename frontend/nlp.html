@@ -4,16 +4,118 @@
 <meta charset="UTF-8">
 <title>AI EMR NLP</title>
 <style>
-body { font-family: Arial; margin: 20px; }
-textarea { width: 100%; height: 100px; margin-bottom: 10px; }
-select, button { margin: 5px 0; padding: 5px; }
-.card { border: 1px solid #ccc; padding: 10px; margin-top: 10px; }
+    body {
+        font-family: 'Segoe UI', Tahoma, sans-serif;
+        background: linear-gradient(135deg, #eef2f3, #dfe6e9);
+        margin: 0;
+        padding: 2rem;
+        color: #2c3e50;
+    }
+
+    h2 {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        text-align: center;
+        color: #34495e;
+        animation: fadeInDown 0.8s ease-in-out;
+    }
+
+    textarea {
+        width: 100%;
+        height: 120px;
+        padding: 1rem;
+        font-size: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 12px;
+        margin-bottom: 1rem;
+        transition: all 0.3s ease;
+    }
+
+    textarea:focus {
+        border-color: #3498db;
+        box-shadow: 0 0 8px rgba(52, 152, 219, 0.4);
+        outline: none;
+    }
+
+    select, button {
+        padding: 0.75rem 1rem;
+        border-radius: 10px;
+        border: 1px solid #ccc;
+        font-size: 1rem;
+        margin: 0.5rem 0;
+        transition: all 0.3s ease;
+    }
+
+    select {
+        width: 100%;
+    }
+
+    button {
+        background: #3498db;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        border: none;
+    }
+
+    button:hover {
+        background: #2980b9;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(52, 152, 219, 0.4);
+    }
+
+    button:active {
+        transform: translateY(1px);
+    }
+
+    #nlpResult, #allResults {
+        margin-top: 1rem;
+        animation: fadeIn 0.6s ease-in-out;
+    }
+
+    .card {
+        background: white;
+        border-radius: 12px;
+        padding: 1rem 1.5rem;
+        margin-top: 1rem;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+    }
+
+    hr {
+        margin: 2rem 0;
+        border: none;
+        height: 1px;
+        background: #bdc3c7;
+    }
+
+    h3 {
+        text-align: center;
+        margin-bottom: 1rem;
+        color: #2c3e50;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInDown {
+        from { opacity: 0; transform: translateY(-20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
 </style>
 </head>
 <body>
 
-<h2>NLP Tasks</h2>
-<textarea id="medicalText" placeholder="Paste patient note here..."></textarea><br>
+<h2>AI-Powered NLP Tasks</h2>
+<textarea id="medicalText" placeholder="Paste patient note here..."></textarea>
 
 <select id="taskSelect">
   <option value="summarize">Summarize</option>
@@ -26,14 +128,14 @@ select, button { margin: 5px 0; padding: 5px; }
   <option value="translate">Translate (Tamil)</option>
   <option value="sentiment">Sentiment</option>
   <option value="ner">NER</option>
-</select><br>
+</select>
 
-<button onclick="submitNLP()">Submit</button>
+<button onclick="submitNLP()">🚀 Run NLP</button>
 
 <div id="nlpResult"></div>
 <hr>
-<h3>Saved Results</h3>
-<button onclick="fetchAllResults()">Fetch All</button>
+<h3>📂 Saved Results</h3>
+<button onclick="fetchAllResults()">🔄 Fetch All</button>
 <div id="allResults"></div>
 
 <script>

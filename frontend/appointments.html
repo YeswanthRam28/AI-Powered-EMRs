@@ -1,30 +1,169 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Appointments Management</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Appointments Management | Clinical Intelligence Hub</title>
+<!-- Google Fonts & Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+<style>
+/* --- Reset & Base --- */
+* { margin:0; padding:0; box-sizing:border-box; font-family: 'Roboto', sans-serif;}
+body {
+    background: linear-gradient(135deg, #fef3c7 0%, #e0f2fe 100%);
+    color: #111827;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding: 40px 20px;
+    transition: background 0.5s;
+}
+
+/* --- Header --- */
+h1 {
+    font-size: 2rem;
+    margin-bottom: 30px;
+    color: #1e293b;
+    animation: fadeSlide 0.8s ease forwards;
+}
+
+/* --- Form Styling --- */
+form {
+    background: rgba(255,255,255,0.95);
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 500px;
+    margin-bottom: 30px;
+    animation: fadeSlide 1s ease forwards;
+}
+
+form select, form input {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+    font-size: 1rem;
+    transition: border 0.3s, box-shadow 0.3s;
+}
+
+form select:focus, form input:focus {
+    border: 1px solid #3b82f6;
+    box-shadow: 0 0 5px rgba(59,130,246,0.4);
+    outline: none;
+}
+
+form button {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    background: #3b82f6;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+form button:hover {
+    background: #2563eb;
+    transform: scale(1.05);
+}
+
+/* --- Refresh Button --- */
+#fetchAppointmentsBtn {
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    background: #10b981;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-bottom: 20px;
+}
+
+#fetchAppointmentsBtn:hover {
+    background: #059669;
+    transform: scale(1.05);
+}
+
+/* --- Appointment List --- */
+#appointmentsList {
+    width: 100%;
+    max-width: 500px;
+    list-style: none;
+}
+
+#appointmentsList li {
+    background: rgba(255,255,255,0.95);
+    padding: 15px 20px;
+    border-radius: 10px;
+    margin-bottom: 12px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+#appointmentsList li:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.12);
+}
+
+/* --- Animations --- */
+@keyframes fadeSlide {
+    0% { opacity: 0; transform: translateY(20px);}
+    100% { opacity: 1; transform: translateY(0);}
+}
+
+/* --- Responsive --- */
+@media (max-width: 600px) {
+    body { padding: 20px 10px; }
+    form, #appointmentsList { max-width: 100%; }
+}
+</style>
 </head>
 <body>
-    <h1>Appointments Management</h1>
 
-    <!-- Form to create appointment -->
-    <form id="appointmentForm">
-        <select id="patient" required>
-            <option value="">Select Patient</option>
-        </select>
-        <select id="doctor" required>
-            <option value="">Select Doctor</option>
-        </select>
-        <input type="datetime-local" id="date" required>
-        <input type="text" id="notes" placeholder="Notes (optional)">
-        <button type="submit">Add Appointment</button>
-    </form>
+<h1>Appointments Management</h1>
 
-    <!-- List appointments -->
-    <button id="fetchAppointmentsBtn">Refresh List</button>
-    <ul id="appointmentsList"></ul>
+<!-- Form to create appointment -->
+<form id="appointmentForm">
+    <select id="patient" required>
+        <option value="">Select Patient</option>
+    </select>
+    <select id="doctor" required>
+        <option value="">Select Doctor</option>
+    </select>
+    <input type="datetime-local" id="date" required>
+    <input type="text" id="notes" placeholder="Notes (optional)">
+    <button type="submit">Add Appointment</button>
+</form>
 
-    <script src="appointments.js"></script>
+<!-- Refresh List Button -->
+<button id="fetchAppointmentsBtn">Refresh List</button>
+
+<!-- List appointments -->
+<ul id="appointmentsList"></ul>
+
+<!-- Optional: Anime.js for smooth animations -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+<script>
+    // Animate form and list on page load
+    anime({
+        targets: ['form', '#fetchAppointmentsBtn', '#appointmentsList li'],
+        opacity: [0,1],
+        translateY: [20,0],
+        delay: anime.stagger(150),
+        easing: 'easeOutQuad'
+    });
+</script>
+
+<!-- Original appointments JS (if exists) -->
+<script src="appointments.js"></script>
+
 </body>
 </html>
